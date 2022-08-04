@@ -2,10 +2,11 @@
     <div class="container">
         <div *ngIf="listing">
             <div class="mx-5 py-3" *ngFor="let story of stories">
+
                 <div class="row pb-2">
                     <div>
-                        <span class="float-start fs-3"> Story Title</span>
-                        <span class="float-end text-primary"> Date :- 13 ,June 2021</span>
+                        <span class="float-start fs-3"> {{story.title}}</span>
+                        <span class="float-end text-primary"> Date :- {{story.com}}</span>
 
                     </div>
                 </div>
