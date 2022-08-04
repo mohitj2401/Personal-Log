@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class StoryComponent implements OnInit {
 
   constructor() { }
-
+  listing: boolean = true;
   ngOnInit(): void {
   }
 
