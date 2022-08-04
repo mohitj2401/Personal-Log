@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Story } from './story';
+import { StoryService } from './story.service';
+
 
 @Component({
   selector: 'app-story',
@@ -11,9 +13,10 @@ export class StoryComponent implements OnInit {
 
   listing: boolean = false;
   createStory: boolean = true;
-  // public editor = ClassicEditor;
   storyForm!: FormGroup;
-  constructor(private formbuilder: FormBuilder) { }
+  stories!: Story[];
+
+  constructor(private formbuilder: FormBuilder, private storyService: StoryService) { }
 
   ngOnInit(): void {
     this.storyForm = this.formbuilder.group({
