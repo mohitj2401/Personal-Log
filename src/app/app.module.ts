@@ -9,6 +9,9 @@ import { HomeComponent } from './home/home.component';
 import { StoryComponent } from './story/story.component';
 import { DiaryComponent } from './diary/diary.component';
 import { IdeaComponent } from './idea/idea.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CKEditorModule } from 'ckeditor4-angular';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +25,9 @@ import { IdeaComponent } from './idea/idea.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    CKEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
