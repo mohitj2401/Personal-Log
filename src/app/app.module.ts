@@ -11,6 +11,7 @@ import { DiaryComponent } from './diary/diary.component';
 import { IdeaComponent } from './idea/idea.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from 'ckeditor4-angular';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import { CKEditorModule } from 'ckeditor4-angular';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    CKEditorModule
+    CKEditorModule, HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

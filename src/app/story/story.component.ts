@@ -19,14 +19,25 @@ export class StoryComponent implements OnInit {
   constructor(private formbuilder: FormBuilder, private storyService: StoryService) { }
 
   ngOnInit(): void {
+    this.getStories();
     this.storyForm = this.formbuilder.group({
       title: ['', [Validators.required, Validators.minLength(255)]],
       content: ['', Validators.required],
       date: ['', [Validators.required]],
     });
+
   }
   addStory() {
 
 
+  }
+  getStories() {
+    this.storyService.getStories().subscribe({
+      next: (stories) => {
+        console.log(stories);
+        this.stories = stories;
+      },
+      error: errror => console.log(errror),
+    });
   }
 }
