@@ -14,4 +14,7 @@ export class StoryService {
   getStories(): Observable<Story[]> {
     return this.http.get<Story[]>(this.baseUrl).pipe();
   }
+  addStories(story: Story): Observable<any> {
+    return this.http.post(this.baseUrl, story).pipe();
+  }
 }

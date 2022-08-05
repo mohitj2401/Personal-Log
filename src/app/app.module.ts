@@ -10,7 +10,6 @@ import { StoryComponent } from './story/story.component';
 import { DiaryComponent } from './diary/diary.component';
 import { IdeaComponent } from './idea/idea.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CKEditorModule } from 'ckeditor4-angular';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -28,7 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    CKEditorModule, HttpClientModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
