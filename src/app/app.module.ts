@@ -11,6 +11,10 @@ import { DiaryComponent } from './diary/diary.component';
 import { IdeaComponent } from './idea/idea.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CKEditorModule } from 'ckeditor4-angular';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SafeHtmlPipe } from './safe-html.pipe';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -21,13 +25,18 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     StoryComponent,
     DiaryComponent,
-    IdeaComponent
+    IdeaComponent,
+    SafeHtmlPipe,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CKEditorModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

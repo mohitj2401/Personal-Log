@@ -1,5 +1,5 @@
 export class Story {
     title!: String;
     content!: String;
-    com!: Date;
+    created_at!: Date;
 }
