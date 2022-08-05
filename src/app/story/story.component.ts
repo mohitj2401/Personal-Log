@@ -49,6 +49,33 @@ export class StoryComponent implements OnInit {
     });
 
   }
+  editStoryFun() {
+
+    var story = this.storyForm.getRawValue();
+    this.storyService.editStories(story).subscribe({
+      next: (stories) => {
+
+        this.toastr.success("Data Edited successfully !!")
+        // this.stories.push(story);
+        this.getStories();
+      },
+      error: errror => console.log(errror),
+    });
+    this.editStory = false;
+    this.listing = true;
+  }
+  deleteStory(storyId) {
+
+
+    this.storyService.deleteStory(storyId).subscribe({
+      next: (stories) => {
+        this.toastr.success("Data Deleted successfully !!")
+        this.getStories();
+      },
+      error: errror => console.log(errror),
+    });
+
+  }
   onTableDataChange(event: any) {
     this.page = event;
     this.getStories();
@@ -62,7 +89,6 @@ export class StoryComponent implements OnInit {
 
     this.storyService.getStories().subscribe({
       next: (stories) => {
-
         this.stories = stories;
       },
       error: errror => console.log(errror),
@@ -76,5 +102,19 @@ export class StoryComponent implements OnInit {
       created_at: [Date.now().toLocaleString, [Validators.required]],
     });
     this.listing = false; this.createStory = true;
+  }
+  openEditForm(id) {
+    var story = this.stories.filter((value) => value.id == id);
+    //  print(story)
+    console.log(id);
+    console.log(story);
+
+    this.storyForm = this.formbuilder.group({
+      id: [story[0]['id']],
+      title: [story[0]['title'], [Validators.required, Validators.maxLength(255)]],
+      content: [story[0]['content'], Validators.required],
+      created_at: [story[0]['created_at'], [Validators.required]],
+    });
+    this.listing = false; this.editStory = true;
   }
 }

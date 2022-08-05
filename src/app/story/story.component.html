@@ -33,8 +33,8 @@
 
                 <div [innerHTML]="story.content | safeHtml" class="p-2"></div>
 
-                <button class="btn btn-outline-secondary me-2" (click)="listing=!listing">Edit</button>
-                <button class="btn btn-outline-danger">Delete</button>
+                <button class="btn btn-outline-secondary me-2" (click)="openEditForm(story.id)">Edit</button>
+                <button class="btn btn-outline-danger" (click)="deleteStory(story.id)">Delete</button>
             </div>
             <div class="d-flex justify-content-center">
                 <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
@@ -66,7 +66,8 @@
                         storyForm.controls['content'].errors
                     " class="alert alert-danger">This Field is Required</p>
                 <div class="form-floating my-3">
-                    <input type="date" class="form-control" id="floatingInputValue" formControlName="created_at">
+                    <input type="datetime-local" class="form-control" id="floatingInputValue"
+                        formControlName="created_at">
                     <label for="floatingInputValue">Completion Date</label>
                     <p *ngIf="(
                         storyForm.controls['created_at'].dirty ||
@@ -86,7 +87,7 @@
                 <button class="btn btn-warning float-start" (click)="listing=true;editStory=false;">Go Back</button>
                 Edit Your Story
             </p>
-            <form [formGroup]="storyForm">
+            <form [formGroup]="storyForm" (ngSubmit)="editStoryFun()">
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="floatingInputValue" formControlName="title">
                     <label for="floatingInputValue">Title</label>
@@ -94,11 +95,12 @@
                 <ckeditor #editor formControlName="content">
                 </ckeditor>
                 <div class="form-floating my-3">
-                    <input type="date" class="form-control" id="floatingInputValue" formControlName="created_at">
+                    <input type="datetime-local" class="form-control" id="floatingInputValue"
+                        formControlName="created_at">
                     <label for="floatingInputValue">Completion Date</label>
                 </div>
 
-                <button type="submit" (click)="addStory();createStory=false;listing=true" class="btn btn-primary">Submit
+                <button type="submit" class="btn btn-primary">Submit
                 </button>
 
             </form>

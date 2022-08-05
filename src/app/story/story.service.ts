@@ -17,4 +17,10 @@ export class StoryService {
   addStories(story: Story): Observable<any> {
     return this.http.post(this.baseUrl, story).pipe();
   }
+  editStories(story: Story): Observable<any> {
+    return this.http.put(this.baseUrl, story).pipe();
+  }
+  deleteStory(storyId): Observable<any> {
+    return this.http.delete(this.baseUrl + "/" + storyId).pipe();
+  }
 }
