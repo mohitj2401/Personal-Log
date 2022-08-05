@@ -7,15 +7,25 @@
 
             <div class="row">
                 <span class="fs-3 ">Your Stories
-                    <button class="btn btn-secondary float-end" (click)="listing=false;createStory=true;">Add
+                    <button class="btn btn-secondary float-end" (click)="openCreateForm()">Add
                         New</button></span>
             </div>
-            <div class="mx-5 py-3" *ngFor="let story of stories">
+            <div class="mx-5 py-3" *ngFor="
+            let story of stories | sortByDate
+            | paginate
+            : {
+                itemsPerPage: tableSize,
+                currentPage: page,
+                totalItems: count
+              };
+        let i = index
+
+            ">
 
                 <div class="row pb-2">
                     <div>
                         <span class="float-start fs-3"> {{story.title}}</span>
-                        <span class="float-end text-primary"> Date :- {{story.created_at}}</span>
+                        <span class="float-end text-primary"> Date :- {{story.created_at | date:'mediumDate'}}</span>
 
                     </div>
                 </div>
@@ -26,10 +36,56 @@
                 <button class="btn btn-outline-secondary me-2" (click)="listing=!listing">Edit</button>
                 <button class="btn btn-outline-danger">Delete</button>
             </div>
-
+            <div class="d-flex justify-content-center">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+            </div>
         </div>
         <div *ngIf="createStory" class="mx-5 my-4">
-            <p class="fs-3 text-center">Add Your Story</p>
+            <p class="fs-3 text-center">
+                <button class="btn btn-warning float-start" (click)="listing=true;createStory=false;">Go Back</button>
+                Add Your Story
+            </p>
+            <form [formGroup]="storyForm" (ngSubmit)="addStory()">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInputValue" formControlName="title">
+                    <label for="floatingInputValue">Title</label>
+                    <p *ngIf="(
+                        storyForm.controls['title'].dirty ||
+                        storyForm.controls['title'].touched ||
+                        storyForm.controls['title'].pristine) &&
+                        storyForm.controls['title'].errors
+                    " class="alert alert-danger">This Field is Required</p>
+                </div>
+                <ckeditor #editor formControlName="content">
+                </ckeditor>
+                <p *ngIf="(
+                        storyForm.controls['content'].dirty ||
+                        storyForm.controls['content'].touched ||
+                        storyForm.controls['content'].pristine) &&
+                        storyForm.controls['content'].errors
+                    " class="alert alert-danger">This Field is Required</p>
+                <div class="form-floating my-3">
+                    <input type="date" class="form-control" id="floatingInputValue" formControlName="created_at">
+                    <label for="floatingInputValue">Completion Date</label>
+                    <p *ngIf="(
+                        storyForm.controls['created_at'].dirty ||
+                        storyForm.controls['created_at'].touched ||
+                        storyForm.controls['created_at'].pristine) &&
+                        storyForm.controls['created_at'].errors
+                    " class="alert alert-danger">This Field is Required</p>
+                </div>
+
+                <button type="submit" class="btn btn-primary" [disabled]="!storyForm.valid">Submit
+                </button>
+
+            </form>
+        </div>
+        <div *ngIf="editStory" class="mx-5 my-4">
+            <p class="fs-3 text-center">
+                <button class="btn btn-warning float-start" (click)="listing=true;editStory=false;">Go Back</button>
+                Edit Your Story
+            </p>
             <form [formGroup]="storyForm">
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="floatingInputValue" formControlName="title">

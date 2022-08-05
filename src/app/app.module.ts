@@ -15,6 +15,9 @@ import { CKEditorModule } from 'ckeditor4-angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { ToastrModule } from 'ngx-toastr';
+import { SortByDatePipe } from './sort-by-date.pipe';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 
 @NgModule({
@@ -27,6 +30,7 @@ import { ToastrModule } from 'ngx-toastr';
     DiaryComponent,
     IdeaComponent,
     SafeHtmlPipe,
+    SortByDatePipe,
 
   ],
   imports: [
@@ -36,7 +40,8 @@ import { ToastrModule } from 'ngx-toastr';
     HttpClientModule,
     CKEditorModule,
     ToastrModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

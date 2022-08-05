@@ -14,25 +14,30 @@ export class StoryComponent implements OnInit {
 
 
   listing: boolean = true;
+  editStory = false;
   createStory: boolean = false;
   storyForm!: FormGroup;
   stories!: Story[];
   successMessage: String = "ss";
   errorMessage!: String;
 
+
+  //pagination configuration
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 4;
+  tableSizes: any = [3, 6, 9, 12];
+
   constructor(private formbuilder: FormBuilder, private storyService: StoryService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
 
     this.getStories();
-    this.storyForm = this.formbuilder.group({
-      title: ['', [Validators.required, Validators.minLength(255)]],
-      content: ['', Validators.required],
-      created_at: ['', [Validators.required]],
-    });
+
 
   }
   addStory() {
+    this.createStory = false; this.listing = true
     var story = this.storyForm.getRawValue();
     this.storyService.addStories(story).subscribe({
       next: (stories) => {
@@ -44,7 +49,15 @@ export class StoryComponent implements OnInit {
     });
 
   }
-
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getStories();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getStories();
+  }
   getStories() {
 
     this.storyService.getStories().subscribe({
@@ -54,5 +67,14 @@ export class StoryComponent implements OnInit {
       },
       error: errror => console.log(errror),
     });
+  }
+
+  openCreateForm() {
+    this.storyForm = this.formbuilder.group({
+      title: ['', [Validators.required, Validators.maxLength(255)]],
+      content: ['', Validators.required],
+      created_at: [Date.now().toLocaleString, [Validators.required]],
+    });
+    this.listing = false; this.createStory = true;
   }
 }
