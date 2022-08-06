@@ -6,7 +6,7 @@
 
 
             <div class="row">
-                <span class="fs-3 ">Your Stories
+                <span class="fs-3 ">Your Ideas
                     <button class="btn btn-secondary float-end" (click)="openCreateForm()">Add
                         New</button></span>
             </div>
@@ -37,7 +37,7 @@
                 <button class="btn btn-outline-danger" (click)="deleteIdea(idea.id)">Delete</button>
             </div>
             <div style="min-height: 60vh;" class="text-center m-auto" *ngIf="ideas.length==0">
-                No story found
+                No idea found
             </div>
             <div class="d-flex justify-content-center">
                 <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
@@ -47,7 +47,7 @@
         <div *ngIf="createIdea" class="mx-5 my-4">
             <p class="fs-3 text-center">
                 <button class="btn btn-warning float-start" (click)="listing=true;createIdea=false;">Go Back</button>
-                Add Your Story
+                Add Your Idea
             </p>
             <form [formGroup]="ideaForm" (ngSubmit)="addIdea()">
                 <div class="form-floating mb-3">
@@ -96,7 +96,7 @@
         <div *ngIf="editIdea" class="mx-5 my-4">
             <p class="fs-3 text-center">
                 <button class="btn btn-warning float-start" (click)="listing=true;editIdea=false;">Go Back</button>
-                Edit Your Story
+                Edit Your Idea
             </p>
             <form [formGroup]="ideaForm" (ngSubmit)="updateIdea()">
                 <div class="form-floating mb-3">

@@ -46,7 +46,7 @@ export class IdeaComponent implements OnInit {
   }
   updateIdea() {
     var idea = this.ideaForm.getRawValue();
-    console.log(idea);
+
 
     this.ideaService.editIdea(idea).subscribe({
       next: (data) => {
@@ -86,8 +86,6 @@ export class IdeaComponent implements OnInit {
     this.ideaService.getIdeas().subscribe({
       next: (ideas) => {
         this.ideas = ideas;
-        console.log(ideas);
-
       },
       error: errror => console.log(errror),
     });
@@ -104,7 +102,7 @@ export class IdeaComponent implements OnInit {
   }
   openEditForm(id) {
     var idea = this.ideas.filter((value) => value.id == id);
-    console.log(idea);
+
     this.ideaForm = this.formbuilder.group({
       id: [idea[0]['id']],
       title: [idea[0]['title'], [Validators.required, Validators.maxLength(255)]],
