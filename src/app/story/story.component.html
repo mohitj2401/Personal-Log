@@ -36,6 +36,9 @@
                 <button class="btn btn-outline-secondary me-2" (click)="openEditForm(story.id)">Edit</button>
                 <button class="btn btn-outline-danger" (click)="deleteStory(story.id)">Delete</button>
             </div>
+            <div style="min-height: 60vh;" class="text-center m-auto" *ngIf="stories.length==0">
+                No story found
+            </div>
             <div class="d-flex justify-content-center">
                 <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
                 </pagination-controls>
