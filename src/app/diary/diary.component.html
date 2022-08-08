@@ -1,1 +1,119 @@
-<p>diary works!</p>
+<div style="min-height: 82vh">
+  <div class="container">
+    <div *ngIf="listing" class="my-5">
+      <div class="row">
+        <span class="fs-3"
+          >Your Diary
+          <button
+            class="btn btn-secondary float-end"
+            (click)="openCreateForm()"
+          >
+            Add New
+          </button></span
+        >
+      </div>
+      <div
+        class="mx-5 py-3"
+        *ngFor="
+          let diary of diaries
+            | sortByDate
+            | paginate
+              : {
+                  itemsPerPage: tableSize,
+                  currentPage: page,
+                  totalItems: count
+                };
+          let i = index
+        "
+      >
+        <div class="row pb-2">
+          <div>
+            <span class="float-start fs-3"> {{ diary.title }}</span>
+            <span class="float-end text-primary">
+              Date :- {{ diary.createdAt | date: "mediumDate" }}</span
+            >
+          </div>
+        </div>
+
+        <div [innerHTML]="diary.content | safeHtml" class="p-2"></div>
+
+        <button
+          class="btn btn-outline-secondary me-2"
+          (click)="openEditForm(diary.id)"
+        >
+          Edit
+        </button>
+        <button class="btn btn-outline-danger" (click)="deleteStory(diary.id)">
+          Delete
+        </button>
+      </div>
+      <div
+        style="min-height: 60vh"
+        class="text-center m-auto"
+        *ngIf="diaries.length == 0"
+      >
+        No Records found
+      </div>
+      <div class="d-flex justify-content-center">
+        <pagination-controls
+          previousLabel="Prev"
+          nextLabel="Next"
+          (pageChange)="onTableDataChange($event)"
+        >
+        </pagination-controls>
+      </div>
+    </div>
+    <div *ngIf="!listing" class="mx-5 my-4">
+      <p class="fs-3 text-center">
+        <button class="btn btn-warning float-start" (click)="listing = true">
+          Go Back
+        </button>
+        {{ formTitle }}
+      </p>
+
+      <form
+        [formGroup]="diaryForm"
+        (ngSubmit)="editButton == false ? addStory() : updateDiary()"
+      >
+        <div class="mb-3">
+          <label class="form-label">Title</label>
+          <input type="text" class="form-control" formControlName="title" />
+          <p
+            *ngIf="
+              (diaryForm.controls['title'].dirty ||
+                diaryForm.controls['title'].touched ||
+                diaryForm.controls['title'].pristine) &&
+              diaryForm.controls['title'].errors
+            "
+            class="alert alert-danger"
+          >
+            This Field is Required
+          </p>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Content</label>
+          <ckeditor #editor formControlName="content"> </ckeditor>
+          <p
+            *ngIf="
+              (diaryForm.controls['content'].dirty ||
+                diaryForm.controls['content'].touched ||
+                diaryForm.controls['content'].pristine) &&
+              diaryForm.controls['content'].errors
+            "
+            class="alert alert-danger"
+          >
+            This Field is Required
+          </p>
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!diaryForm.valid"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
