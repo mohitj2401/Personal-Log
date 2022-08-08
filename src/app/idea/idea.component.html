@@ -1,120 +1,165 @@
-<div style="min-height:82vh;">
-    <div class="container">
-
-
-        <div *ngIf="listing" class="my-5">
-
-
-            <div class="row">
-                <span class="fs-3 ">Your Ideas
-                    <button class="btn btn-secondary float-end" (click)="openCreateForm()">Add
-                        New</button></span>
-            </div>
-            <div class="mx-5 py-3" *ngFor="
-            let idea of ideas | sortByDate
+<div style="min-height: 82vh">
+  <div class="container">
+    <div *ngIf="listing" class="my-5">
+      <div class="row pb-3">
+        <span class="fs-3"
+          >Your Ideas
+          <button
+            class="btn btn-secondary float-end"
+            (click)="openCreateForm()"
+          >
+            Add New
+          </button></span
+        >
+      </div>
+      <div
+        class="mx-5 p-3 idea-card my-3"
+        *ngFor="
+          let idea of ideas
+            | sortByDate
             | paginate
-            : {
-                itemsPerPage: tableSize,
-                currentPage: page,
-                totalItems: count
-              };
-        let i = index
-
-            ">
-
-                <div class="row pb-2">
-                    <div>
-                        <span class="float-start fs-3"> {{idea.title}}</span>
-                        <span class="float-end text-primary"> Date :- {{idea.completedAt | date:'medium'}}</span>
-
-                    </div>
-                </div>
-
-
-                <div [innerHTML]="idea.content | safeHtml" class="p-2"></div>
-
-                <button class="btn btn-outline-secondary me-2" (click)="openEditForm(idea.id)">Edit</button>
-                <button class="btn btn-outline-danger" (click)="deleteIdea(idea.id)">Delete</button>
-            </div>
-            <div style="min-height: 60vh;" class="text-center m-auto" *ngIf="ideas.length==0">
-                No idea found
-            </div>
-            <div class="d-flex justify-content-center">
-                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
-                </pagination-controls>
-            </div>
+              : {
+                  itemsPerPage: tableSize,
+                  currentPage: page,
+                  totalItems: count
+                };
+          let i = index
+        "
+      >
+        <div class="row pb-2">
+          <div>
+            <span class="float-start fs-3">
+              {{ idea.title }} ({{ idea.status }})</span
+            >
+            <span class="float-end text-primary">
+              Date :- {{ idea.completedAt | date: "medium" }}</span
+            >
+          </div>
         </div>
-        <div *ngIf="createIdea" class="mx-5 my-4">
-            <p class="fs-3 text-center">
-                <button class="btn btn-warning float-start" (click)="listing=true;createIdea=false;">Go Back</button>
-                Add Your Idea
-            </p>
-            <form [formGroup]="ideaForm" (ngSubmit)="addIdea()">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInputValue" formControlName="title">
-                    <label for="floatingInputValue">Title</label>
-                    <p *ngIf="(
-                        ideaForm.controls['title'].dirty ||
-                        ideaForm.controls['title'].touched ||
-                        ideaForm.controls['title'].pristine) &&
-                        ideaForm.controls['title'].errors
-                    " class="alert alert-danger">This Field is Required</p>
-                </div>
-                <ckeditor #editor formControlName="content">
-                </ckeditor>
-                <p *ngIf="(
-                        ideaForm.controls['content'].dirty ||
-                        ideaForm.controls['content'].touched ||
-                        ideaForm.controls['content'].pristine) &&
-                        ideaForm.controls['content'].errors
-                    " class="alert alert-danger">This Field is Required</p>
 
+        <div [innerHTML]="idea.content | safeHtml" class="p-2"></div>
 
-                <select class="form-select" formControlName="status">
-                    <option value="" selected>Select an Status</option>
-                    <option value="pending">Pending</option>
-                    <option value="proccessing">In Progress</option>
-                    <option value="completed">Completed</option>
-                </select>
-                <div class="form-floating my-3">
-                    <input type="datetime-local" class="form-control" id="floatingInputValue"
-                        formControlName="completedAt">
-                    <label for="floatingInputValue">Completion Date</label>
-                    <p *ngIf="(
-                        ideaForm.controls['completedAt'].dirty ||
-                        ideaForm.controls['completedAt'].touched ||
-                        ideaForm.controls['completedAt'].pristine) &&
-                        ideaForm.controls['completedAt'].errors
-                    " class="alert alert-danger">This Field is Required</p>
-                </div>
-
-                <button type="submit" class="btn btn-primary" [disabled]="!ideaForm.valid">Submit
-                </button>
-
-            </form>
-        </div>
-        <div *ngIf="editIdea" class="mx-5 my-4">
-            <p class="fs-3 text-center">
-                <button class="btn btn-warning float-start" (click)="listing=true;editIdea=false;">Go Back</button>
-                Edit Your Idea
-            </p>
-            <form [formGroup]="ideaForm" (ngSubmit)="updateIdea()">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInputValue" formControlName="title">
-                    <label for="floatingInputValue">Title</label>
-                </div>
-                <ckeditor #editor formControlName="content">
-                </ckeditor>
-                <div class="form-floating my-3">
-                    <input type="datetime-local" class="form-control" id="floatingInputValue"
-                        formControlName="completedAt">
-                    <label for="floatingInputValue">Completion Date</label>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Submit
-                </button>
-
-            </form>
-        </div>
+        <button
+          class="btn btn-outline-secondary me-2"
+          (click)="openEditForm(idea.id)"
+        >
+          Edit
+        </button>
+        <button class="btn btn-outline-danger" (click)="deleteIdea(idea.id)">
+          Delete
+        </button>
+      </div>
+      <div
+        style="min-height: 60vh"
+        class="text-center m-auto"
+        *ngIf="ideas.length == 0"
+      >
+        No idea found
+      </div>
+      <div class="d-flex justify-content-center">
+        <pagination-controls
+          previousLabel="Prev"
+          nextLabel="Next"
+          (pageChange)="onTableDataChange($event)"
+        >
+        </pagination-controls>
+      </div>
     </div>
+    <div *ngIf="openForm" class="mx-5 my-4">
+      <p class="fs-3 text-center">
+        <button
+          class="btn btn-warning float-start"
+          (click)="listing = true; openForm = false"
+        >
+          Go Back
+        </button>
+        Add Your Idea
+      </p>
+      <form
+        [formGroup]="ideaForm"
+        (ngSubmit)="editIdea == false ? addIdea() : updateIdea()"
+      >
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Title</label>
+          <input type="text" class="form-control" formControlName="title" />
+          <p
+            *ngIf="
+              (ideaForm.controls['title'].dirty ||
+                ideaForm.controls['title'].touched ||
+                ideaForm.controls['title'].pristine) &&
+              ideaForm.controls['title'].errors
+            "
+            class="alert alert-danger"
+          >
+            This Field is Required
+          </p>
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            >Content</label
+          >
+          <ckeditor #editor formControlName="content"> </ckeditor>
+          <p
+            *ngIf="
+              (ideaForm.controls['content'].dirty ||
+                ideaForm.controls['content'].touched ||
+                ideaForm.controls['content'].pristine) &&
+              ideaForm.controls['content'].errors
+            "
+            class="alert alert-danger"
+          >
+            This Field is Required
+          </p>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Select idea status</label>
+          <select class="form-select" formControlName="status">
+            <option value="" selected>Select an Status</option>
+            <option value="pending">Pending</option>
+            <option value="proccessing">In Progress</option>
+            <option value="completed">Completed</option>
+          </select>
+          <p
+            *ngIf="
+              (ideaForm.controls['status'].dirty ||
+                ideaForm.controls['status'].touched ||
+                ideaForm.controls['status'].pristine) &&
+              ideaForm.controls['status'].errors
+            "
+            class="alert alert-danger"
+          >
+            This Field is Required
+          </p>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Completion Date</label>
+          <input
+            type="datetime-local"
+            class="form-control"
+            id="floatingInputValue"
+            formControlName="completedAt"
+          />
+          <p
+            *ngIf="
+              (ideaForm.controls['completedAt'].dirty ||
+                ideaForm.controls['completedAt'].touched ||
+                ideaForm.controls['completedAt'].pristine) &&
+              ideaForm.controls['completedAt'].errors
+            "
+            class="alert alert-danger"
+          >
+            This Field is Required
+          </p>
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!ideaForm.valid"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
 </div>

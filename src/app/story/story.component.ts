@@ -14,10 +14,12 @@ export class StoryComponent implements OnInit {
 
 
   listing: boolean = true;
-  editStory = false;
-  createStory: boolean = false;
+
+  openForm: boolean = false;
   storyForm!: FormGroup;
   stories!: Story[];
+  editButton=false;
+  addButton=true;
   successMessage: String = "ss";
   errorMessage!: String;
 
@@ -37,8 +39,7 @@ export class StoryComponent implements OnInit {
 
   }
   addStory() {
-    this.createStory = false; this.listing = true
-    var story = this.storyForm.getRawValue();
+     var story = this.storyForm.getRawValue();
     this.storyService.addStories(story).subscribe({
       next: (stories) => {
 
@@ -47,8 +48,9 @@ export class StoryComponent implements OnInit {
       },
       error: errror => console.log(errror),
     });
-
+    this.openForm = false; this.listing = true
   }
+
   editStoryFun() {
 
     var story = this.storyForm.getRawValue();
@@ -61,7 +63,7 @@ export class StoryComponent implements OnInit {
       },
       error: errror => console.log(errror),
     });
-    this.editStory = false;
+    this.openForm = false;
     this.listing = true;
   }
   deleteStory(storyId) {
@@ -96,18 +98,19 @@ export class StoryComponent implements OnInit {
   }
 
   openCreateForm() {
+    this.editButton=false;
+
     this.storyForm = this.formbuilder.group({
       title: ['', [Validators.required, Validators.maxLength(255)]],
       content: ['', Validators.required],
-      created_at: [Date.now().toLocaleString, [Validators.required]],
+      created_at: ['', [Validators.required]],
     });
-    this.listing = false; this.createStory = true;
+    this.listing = false; this.openForm = true;
   }
   openEditForm(id) {
+    this.editButton=true;
+
     var story = this.stories.filter((value) => value.id == id);
-    //  print(story)
-    console.log(id);
-    console.log(story);
 
     this.storyForm = this.formbuilder.group({
       id: [story[0]['id']],
@@ -115,6 +118,6 @@ export class StoryComponent implements OnInit {
       content: [story[0]['content'], Validators.required],
       created_at: [story[0]['created_at'], [Validators.required]],
     });
-    this.listing = false; this.editStory = true;
+    this.listing = false; this.openForm = true;
   }
 }

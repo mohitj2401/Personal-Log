@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class IdeaComponent implements OnInit {
 
   listing: boolean = true;
+  openForm=false;
   editIdea = false;
   createIdea: boolean = false;
   ideaForm!: FormGroup;
@@ -33,7 +34,7 @@ export class IdeaComponent implements OnInit {
 
   }
   addIdea() {
-    this.createIdea = false; this.listing = true;
+    this.openForm = false; this.listing = true;
     var idea = this.ideaForm.getRawValue();
     this.ideaService.addIdea(idea).subscribe({
       next: (ideas) => {
@@ -55,7 +56,7 @@ export class IdeaComponent implements OnInit {
       },
       error: errror => console.log(errror),
     });
-    this.editIdea = false;
+    this.openForm = false;
     this.listing = true;
   }
 
@@ -92,15 +93,21 @@ export class IdeaComponent implements OnInit {
   }
 
   openCreateForm() {
+    this.editIdea = false;
+    this.openForm = true;
     this.ideaForm = this.formbuilder.group({
       title: ['', [Validators.required, Validators.maxLength(255)]],
       content: ['', Validators.required],
       completedAt: [''],
       status: ['', [Validators.required]],
     });
-    this.listing = false; this.createIdea = true;
+    this.listing = false;
   }
   openEditForm(id) {
+    this.openForm = true;
+
+    this.editIdea = true;
+
     var idea = this.ideas.filter((value) => value.id == id);
 
     this.ideaForm = this.formbuilder.group({
@@ -110,7 +117,7 @@ export class IdeaComponent implements OnInit {
       status: [idea[0]['status'], [Validators.required]],
       completedAt: [idea[0]['completedAt']],
     });
-    this.listing = false; this.editIdea = true;
+    this.listing = false;
   }
 
 }
