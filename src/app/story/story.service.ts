@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class StoryService {
-  baseUrl = 'http://127.0.0.1:1900/story';
+  baseUrl = 'http://127.0.0.1:9000/story';
   constructor(private http: HttpClient) { }
 
 

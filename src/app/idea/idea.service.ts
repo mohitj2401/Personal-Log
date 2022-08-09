@@ -8,7 +8,7 @@ import { Idea } from './idea';
 })
 export class IdeaService {
 
-  baseUrl = 'http://127.0.0.1:1800/idea';
+  baseUrl = 'http://127.0.0.1:9000/idea';
   constructor(private http: HttpClient) { }
 
 

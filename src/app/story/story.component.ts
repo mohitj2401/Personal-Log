@@ -44,7 +44,7 @@ export class StoryComponent implements OnInit {
       next: (stories) => {
 
         this.toastr.success("Data inserted successfully !!")
-        this.stories.push(story);
+        this.getStories();
       },
       error: errror => console.log(errror),
     });
@@ -103,7 +103,7 @@ export class StoryComponent implements OnInit {
     this.storyForm = this.formbuilder.group({
       title: ['', [Validators.required, Validators.maxLength(255)]],
       content: ['', Validators.required],
-      created_at: ['', [Validators.required]],
+
     });
     this.listing = false; this.openForm = true;
   }
@@ -116,7 +116,7 @@ export class StoryComponent implements OnInit {
       id: [story[0]['id']],
       title: [story[0]['title'], [Validators.required, Validators.maxLength(255)]],
       content: [story[0]['content'], Validators.required],
-      created_at: [story[0]['created_at'], [Validators.required]],
+
     });
     this.listing = false; this.openForm = true;
   }
